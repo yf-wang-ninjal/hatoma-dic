@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- official href="https://raw.githubusercontent.com/DARIAH-ERIC/lexicalresources/master/Schemas/TEILex0/out/TEILex0.rng" -->
+<?xml-model
+  href="TEILex0-hatoma.rng"
+  type="application/xml"
+  schematypens="http://relaxng.org/ns/structure/1.0"?>
+<!-- <?xml-model
+  href="https://vault.tei-c.org/P5/current/xml/tei/custom/schema/relaxng/tei_all.rng"
+  schematypens="http://relaxng.org/ns/structure/1.0"
+  type="application/xml"?> -->
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="lex-0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title></title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher></publisher>
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by-sa/3.0/"/>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <listBibl type="dictionaries">
+          <biblStruct>
+            <monogr>
+              <title level="m" type="main">鳩間方言辞典</title>
+              <author>
+                <persName>
+                  <surname>加治工</surname>
+                  <forename>真市</forename>
+                </persName>
+              </author>
+              <editor>
+                <persName>
+                  <surname>中川</surname>
+                  <forename>奈津子</forename>
+                </persName>
+              </editor>
+              <edition>第１版</edition>
+              <imprint>
+                <date>2021</date>
+                <publisher>国立国語研究所言語変異研究領域</publisher>
+                <pubPlace>立川</pubPlace>
+              </imprint>
+            </monogr>
+          </biblStruct>
+        </listBibl>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <langUsage>
+        <!-- language[@role] は TEI P5 非互換 -->
+        <language role="sourceLanguage" ident="rys-x-hatoma">鳩間方言</language>
+        <language role="targetLanguage" ident="ja">日本語</language>
+      </langUsage>
+    </profileDesc>
+  </teiHeader>
+  <text>
+    <body/>
+  </text>
+</TEI>

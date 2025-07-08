@@ -1,0 +1,14 @@
+select count(distinct IPA) icount, WdID||' '||Ex comb, json_group_array(distinct IPA) from examples group by comb having icount > 1 order by icount desc;
+icount	comb	json_group_array(distinct IPA)
+2	9836 ヤー⸢ディン⸣　タ⸢ジナイ⸣リ	["[jaː⸢din⸣ ta⸢ʒinai⸣ri]","[jaː⸢din⸣ ta⸢ʤinai⸣ri]"]
+2	7578 フ⸢タシゥカミ	["[ɸu̥⸢tasï̥kami]","[ɸu̥⸢tasï̥kaŋ]"]
+2	7238 ⸣パトゥザヌ　⸣シー	["[⸣patuʣanu ⸣ʃiː]","[⸣pḁtudʣanu ⸣ʃiː]"]
+2	5239 ⸢ナン⸣ゾー　⸣キツァー　⸢ナー⸣ヌ	["[⸢nan⸣ʣoː ⸣ki̥ʦaː ⸢naː⸣nu]","[⸢nan⸣ʣoː ⸣kiʦaː ⸢naː⸣nu]"]
+2	3972 カ⸢キッツァー⸣シバ	["[kḁ⸢kitʦa⸣ːʃiba]","[kḁ⸢kitʦaː⸣ʃiba]"]
+2	3752 カ⸢チ⸣レー　⸣ミサムヌ	["[ka.⸢ʧi⸣reː ⸣misamunu]","[kḁ⸢ʧi⸣reː ⸣misamunu]"]
+2	2913 ⸢ウッふィ⸣バ	["[⸢ʔuffi⸣ba]","[⸢ʔufi⸣ba]"]
+2	1670 ⸢イシゥカー　ナー⸣ヌ	["[⸢ʔisi̥kaː naː⸣nu]","[⸢ʔisï̥kaːnaː⸣nu]"]
+2	1670 ⸢イシゥ⸣カー　⸣クトー　⸢ナー⸣ヌ	["[⸢ʔisi̥⸣kaː ⸣ku̥toː ⸢naː⸣nu]","[⸢ʔisï̥⸣kaː ⸣kutoː ⸢naː⸣nu]"]
+2	13205 ⸢パー⸣ク　⸢バシキリ	["[⸢paː⸣ku ⸢baʃi̥kiri]","[⸢paː⸣ku ba⸢ʃikiri]"]
+2	12572 ク⸢レー　ヌー⸣シ　⸢スーワ	["[ku⸢reː nuː⸣ʃi ⸢suːwa]","[ku⸢reː  nuː⸣ʃi ⸢suːwa]"]
+2	11969 ⸢ナシケー⸣　ミサムヌ	["[⸢naʃi̥keː⸣ misamunu]","[⸢naʃikeː⸣ misamunu]"]

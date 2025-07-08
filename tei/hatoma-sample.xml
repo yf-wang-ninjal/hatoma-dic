@@ -1,0 +1,70 @@
+<TEI  xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+        <sourceDesc>
+            <biblStruct>
+                <monogr>
+                    <title level="m" type="main">鳩間方言辞典</title>
+                    <author>
+                    <persName>
+                        <surname>加治工</surname>
+                        <forename>真市</forename>
+                    </persName>
+                    </author>
+                    <editor>
+                        <persName>
+                        <surname>中川</surname>
+                        <forename>奈津子</forename>
+                        </persName>
+                    </editor>
+                    <edition>第１版</edition>
+                    <imprint>
+                    <date>2021</date>
+                    <publisher>国立国語研究所言語変異研究領域</publisher>
+                    <pubPlace>立川</pubPlace>
+                    </imprint>
+                </monogr>
+            </biblStruct>
+        </sourceDesc>
+        </fileDesc>
+</teiHeader>
+
+    <text>
+        <body>
+            <entry xml:id="HATOMA.14" type="mainEntry" xml:lang="rys">
+                <form type="lemma">
+                <orth>アーザ</orth>
+                <pron notation="accent">⸢アー⸣ザ</pron> <!-- 提案部分 -->
+                <pron notation="ipa">[⸢ʔaː⸣ʣa]</pron>
+                <media mimeType="audio/wav" url="htmvoc_14.wav" dur="PT5S" /> <!-- 提案部分 -->
+            </form>
+                <gramGrp>
+                <gram type="pos" xml:lang="ja">名</gram>
+                <gram type="pos" xml:lang="en">N</gram>
+                </gramGrp>
+                <sense xml:id="HATOMA.14.1">
+                <def xml:lang="ja">兄。総称。親族名称、呼称。「'u-ra　sin-ca　'a-ri(汝兄あるか)」「語音翻訳」『海東諸国紀』と関係があるとする説『図説琉球語辞典』がある。</def>
+                <cit type="example">
+                    <quote>⸢アー⸣ザー　⸣マナー　⸢オール⸣ワ</quote>
+                    <pron notation="ipa">[⸢ʔaː⸣ʣaː ⸣manaː ⸢ʔoːru⸣wa]</pron> <!-- 提案部分--> <!--pronは見出しに使われる想定なので、例文では使わないほうが良い。-->
+                    <cit type="translation" xml:lang="ja">
+                        <quote>(兄さんは何処に居られますか)。</quote>
+                    </cit>
+                    <note>
+                        この語彙には、ウ⸢ボー⸣ザ[ʔu⸢boː⸣ʣa](長&lt;大&gt;兄)、⸣ナカザー[⸣nakaʣaː](中兄)、アー⸢ザ⸣マ[ʔaː⸢ʣa⸣ma](末&lt;小&gt;兄)の部分体系&lt;序列&gt;がある。上に固有名詞を付ける際には、⸢イシ⸣トザー[⸢ʔiʃi⸣toʣaː](石戸兄)⸢サン⸣ドーザー[⸢san⸣doːzaː](三郎兄)⸣タローザー[⸣taroːʣaː](太郎兄)のように~⸣ザ[~⸣ʣa]となる。
+                    </note>
+                </cit>
+                <cit type="example">
+                    <quote>⸢アー⸣ザー　⸢マー　オーッ⸣タカヤー</quote>
+                    <pron notation="ipa">[⸢ʔaː⸣ʣaː ⸢maː ʔoːt⸣takajaː]</pron> <!-- 提案部分-->
+                    <cit type="translation" xml:lang="ja">
+                        <quote>(兄さんは何処へいらっしゃったかねえ)</quote>
+                    </cit>
+                </cit>
+            </sense>
+            </entry> 
+        </body>
+    </text>
+</TEI>
+
+<!-- 将来の展望：言及されている民謡とか祭事とかの映像・音声、民具の画像・映像 <ref> <media /> </ref> -->
