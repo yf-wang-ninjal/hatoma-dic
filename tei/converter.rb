@@ -162,11 +162,12 @@ def build_unit(parent, lines, gram: false)
       prev_note = []
       exs = unit.fields(10..-1).compact
       exs.each.with_index do |f, fi|
-        # TODO: 修正版形式では歌が例文スロットに入るのでここで分岐させる
-        f.start_with?(TAGS[:sg]) do |m|
-          # TODO
-          skip_this = true
-        end
+        # 歌が本文に混ざりこんでいることがあるので例文にできない
+        # # TODO: 修正版形式では歌が例文スロットに入るのでここで分岐させる
+        # f.start_with?(TAGS[:sg]) do |m|
+        #   # TODO
+        #   skip_this = true
+        # end
         f.match(TAGS[:break]) do |m|
           prev = store + [m[:break_txt]]
           skip_this = true
@@ -226,7 +227,7 @@ def substructure(text, id)
     sections = text.split %r|(\{Sg_\d+\}.+?\{/End\})| # 終端は必ず大文字のEnd
     sections.flat_map.with_index do |s, i|
       if i.odd?
-        song_container = REXML::Element.new 'seg' # TODO
+        song_container = REXML::Element.new 'seg'
         song_container.add_attributes 'type' => 'songs'
         # 各要素が [開始タグ, 内容] の配列となる
         s.delete_suffix('{/End}').split(/(\{Sg_\d+\}|\{Title\}|\{Bibl\})/)[1..].each_slice(2) do |(title, content)|
@@ -282,7 +283,7 @@ def substructure(text, id)
     end
   # 箇条書きの場合
   elsif text.match? TAGS[:list]
-    segs = text.split %r<(\((?:x{0,3}(?:ix|iv|v?i{0,3})|[イロ])\).+?\{/End\})> # 終端は必ず小文字のend
+    segs = text.split %r<(\((?:x{0,3}(?:ix|iv|v?i{0,3})|[イロ])\).+?\{/end\})> # 終端は必ず小文字のend
     segs.flat_map.with_index do |s, i|
       if i.odd?
         # TODO: 現行の Lex-0 では <def> に <list> を直接入れられない
@@ -294,6 +295,8 @@ def substructure(text, id)
           item.add_attributes 'n' => title.delete_prefix('(').delete_suffix(')')
           untag(content, id).each { |t| item << to_text(t, true) }
         end
+
+        container
       else
         # TODO
         untag s, id
@@ -393,8 +396,6 @@ matrix.chunk { |e| e['WdID'] }.each do |_, entries|
     audio.add_attributes 'mimeType' => 'audio/wav', 'url' => head['SoundFile'] || '#'
 
     pos_map = entries.map { |l| l['PoSID'] }.uniq
-    # mng_map = entries.map { |l| "#{l['PoSID']}.#{l['MnID']}" }.uniq
-    # exp_map = entries.map { |l| l['Description']&.index(TAGS[:exp])&.zero? ? "#{l['PoSID']}.EXP#{get_expid l}" : nil }.compact.uniq
 
     if pos_map.size > 1
       entries.group_by { |l| l['PoSID'] }.each do |pid, pgroup|
