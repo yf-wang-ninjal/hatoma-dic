@@ -227,36 +227,34 @@ def substructure(text, id)
     sections = text.split %r|(\{Sg_\d+\}.+?\{/End\})| # 終端は必ず大文字のEnd
     sections.flat_map.with_index do |s, i|
       if i.odd?
-        song_container = REXML::Element.new 'seg'
-        song_container.add_attributes 'type' => 'songs'
+        song_container = REXML::Element.new 'quote'
+        my_id = "#{HATOMA_ID}.#{id}.SG#{i / 2 + 1}"
+        song_container.add_attributes 'type' => 'song', 'xml:id' => my_id
         # 各要素が [開始タグ, 内容] の配列となる
         s.delete_suffix('{/End}').split(/(\{Sg_\d+\}|\{Title\}|\{Bibl\})/)[1..].each_slice(2) do |(title, content)|
           case title
           when TAGS[:sg]
             num = Regexp.last_match[:sg_n]
-            my_id = "#{HATOMA_ID}.#{id}.SG#{num}"
-            song = REXML::Element.new 'cit', song_container
-            song.add_attributes 'type' => 'example', 'xml:id' => my_id
-            uta = REXML::Element.new 'usg', song
-            uta.add_attributes 'type' => 'textType'
-            uta.text = '歌'
+            song = REXML::Element.new 'p', song_container
+            song.add_attributes 'n' => num, 'xml:lang' => HATOMA_LANG
             begin
-              perf, quote, trs = content.match(%r|\A\s*(?:{Performer}(.+){/Performer})?((?:\([五六七]\))?[^(]+)\s*(\(([^)]+)\))?|)[1..3] # FIXME: Order: 5266 仮対策
+              perf, quote, trs = content.match(%r!\A[/\s]*(?:{Performer}(.+){/Performer})?((?:\([五六七]\))?(?:[^(]|\(囃子\))+)\s*(\(((?:\(囃子\)|[^)])+)\))?!)[1..3] # FIXME: Order: 5266, 18377 仮対策
             rescue NoMethodError
               p "#{id} -- #{content}"
             end
 
             if perf
-              pf = REXML::Element.new 'seg', song
+              pf = REXML::Element.new 'note', song
               pf.add_attributes 'type' => 'performer'
               untag(perf, my_id).each { |t| pf << to_text(t, true) }
             end
-            qt = REXML::Element.new 'quote', song
-            untag(quote, my_id).each { |t| qt << to_text(t, true) }
-            tr = REXML::Element.new 'cit', song
-            tr.add_attributes 'type' => 'translation', 'xml:lang' => JA_LANG
-            tr_q = REXML::Element.new 'quote', tr
-            untag(trs, my_id).each { |t| tr_q << to_text(t, true) }
+            untag(quote, my_id).each { |t| song << to_text(t, true) }
+            if trs && !trs.empty?
+              tr = REXML::Element.new 'cit', song
+              tr.add_attributes 'type' => 'translation', 'xml:lang' => JA_LANG
+              tr_q = REXML::Element.new 'quote', tr
+              untag(trs, my_id).each { |t| tr_q << to_text(t, true) }
+            end
           when '{Title}'
             title = REXML::Element.new 'title', song_container
             begin
