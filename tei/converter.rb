@@ -36,12 +36,12 @@ CATS = {
   '人名' => [:domain, '人'],
   '数詞' => [:domain, '数'],
   '擬音語' => [:meaningType, '擬音語'],
-  '幼児語' => [:domain, '幼', true],
+  '幼児語' => [:socioCultural, '幼', true],
   '固有' => [:domain, '地'],
   '昆虫' => [:domain, '動'],
   '昆' => [:domain, '動'],
   '謙譲語' => [:socioCultural, '謙譲語', true],
-  '擬態語' => [:domain, '擬態語'],
+  '擬態語' => [:meaningType, '擬態語'],
   '植物' => [:domain, '植'],
   '屋' => [:domain, '屋'],
 }.freeze
@@ -60,7 +60,7 @@ def gen_gramgrp(parent, pos)
   parent.push pos_gram
 end
 
-def gen_ex(id, order_id, content, context)
+def gen_ex(id, order_id, content, context, prev_exq: nil)
   unless content.empty?
     cite = REXML::Element.new 'cit'
     cite.add_attributes 'type' => 'example', 'xml:id' => "#{HATOMA_ID}.#{id}", 'n' => order_id
@@ -85,15 +85,16 @@ def gen_ex(id, order_id, content, context)
 
     unless cxt.empty?
       prev_note = REXML::Element.new 'note'
-      prev_cite = REXML::Element.new cite, prev_note
+      prev_cite = REXML::Element.new 'cit', prev_note
+      prev_cite.add_attributes 'type' => 'example', 'corresp' => prev_exq ? "##{HATOMA_ID}.#{prev_exq}" : nil
       cxt[0..2].each { |x| prev_cite.push x }
-      untag(cxt[3], id).each { |n| prev_note.push n }
+      cxt[3].each { |n| prev_note.push n }
       cite.push prev_note
     end
     cnt[0..2].each { |n| cite.push n }
     if cnt[3]
       after_note = REXML::Element.new 'note'
-      untag(cnt[3], id).each { |n| after_note.push n }
+      cnt[3].each { |n| after_note.push n }
       cite.push after_note
     end
   end
@@ -160,14 +161,9 @@ def build_unit(parent, lines, gram: false)
       store = []
       prev = []
       prev_note = []
+      prev_exq = nil
       exs = unit.fields(10..-1).compact
       exs.each.with_index do |f, fi|
-        # 歌が本文に混ざりこんでいることがあるので例文にできない
-        # # TODO: 修正版形式では歌が例文スロットに入るのでここで分岐させる
-        # f.start_with?(TAGS[:sg]) do |m|
-        #   # TODO
-        #   skip_this = true
-        # end
         f.match(TAGS[:break]) do |m|
           prev = store + [m[:break_txt]]
           skip_this = true
@@ -183,10 +179,13 @@ def build_unit(parent, lines, gram: false)
         case exr
         when 0
           # この段階で前の例文を親に収納するが、この時点で exq は収納される例文の次の index を示している。したがって実質的に例文番号が 1 始まりで収納される
-          cite, store, prev_note = gen_ex "#{elid}.#{exq}", uorder, store, prev_note
+          cite, store, prev_note = gen_ex "#{elid}.#{exq}", uorder, store, prev_note, prev_exq: "#{elid}.#{prev_exq}"
           elem.push cite if cite
           store << f
-          prev_note = prev unless prev.empty?
+          unless prev.empty?
+            prev_note = prev
+            prev_exq = exq
+          end
         when 1
           store << f
         when 2
@@ -196,7 +195,7 @@ def build_unit(parent, lines, gram: false)
         end
       end
 
-      cite, = gen_ex "#{elid}.#{(exs.size - skip).div 3}", uorder, store, prev_note
+      cite, = gen_ex "#{elid}.#{(exs.size - skip).div 3}", uorder, store, prev_note, prev_exq: "#{elid}.#{prev_exq}"
       elem.push cite if cite
     end
 
