@@ -237,7 +237,7 @@ def substructure(text, id)
             song = REXML::Element.new 'p', song_container
             song.add_attributes 'n' => num, 'xml:lang' => HATOMA_LANG
             begin
-              perf, quote, trs = content.match(%r!\A[/\s]*(?:{Performer}(.+){/Performer})?((?:\([五六七]\))?(?:[^(]|\(囃子\))+)\s*(\(((?:\(囃子\)|[^)])+)\))?!)[1..3] # FIXME: Order: 5266, 18377 仮対策
+              perf, quote, trs = content.match(%r!\A[/\s]*(?:{Performer}(.+){/Performer})?((?:\([五六七]\))?(?:[^(]|\(囃子?\))+)\s*(\(((?:\(囃子?\)|[^)])+)\))?!)[1..3] # FIXME: Order: 5266, 18377 仮対策
             rescue NoMethodError
               p "#{id} -- #{content}"
             end
@@ -285,7 +285,7 @@ def substructure(text, id)
       if i.odd?
         # TODO: 現行の Lex-0 では <def> に <list> を直接入れられない
         container = REXML::Element.new 'hi'
-        container.add_attributes 'type' => 'list'
+        container.add_attributes 'rend' => 'list'
         list = REXML::Element.new 'list', container
         s.delete_suffix('{/end}').split(TAGS[:list])[1..].each_slice(2) do |(title, content)|
           item = REXML::Element.new 'item', list
