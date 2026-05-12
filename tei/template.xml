@@ -12,19 +12,161 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title></title>
+        <title>TEI Lex-0版 鳩間方言辞典</title>
+        <editor>
+          <persName>
+            <surname>王</surname>
+            <forename>一凡</forename>
+          </persName>
+        </editor>
+        <editor>
+          <persName>
+            <surname>中川</surname>
+            <forename>奈津子</forename>
+          </persName>
+        </editor>
+        <respStmt>
+          <resp when-iso="2026-04-28">設計、XML変換、データ修正</resp>
+          <persName>
+            <surname>王</surname>
+            <forename>一凡</forename>
+          </persName>
+        </respStmt>
+        <respStmt>
+          <resp when-iso="2026-04-28">データ修正</resp>
+          <persName>
+            <surname>中川</surname>
+            <forename>奈津子</forename>
+          </persName>
+        </respStmt>
       </titleStmt>
+      <editionStmt>
+        <edition>20260428</edition>
+      </editionStmt>
       <publicationStmt>
-        <publisher></publisher>
+        <publisher>国立国語研究所</publisher>
+        <authority>人間文化研究機構共創先導プロジェクト（共創促進研究）「学術知デジタルライブラリの構築（国立国語研究所拠点）」</authority>
+        <date when-iso="2026-04-28">2026年4月28日</date>
         <availability>
-          <licence target="https://creativecommons.org/licenses/by-sa/3.0/"/>
+          <licence target="https://creativecommons.org/licenses/by-sa/4.0/"/>
         </availability>
       </publicationStmt>
+      <notesStmt>
+        <note>
+          <!-- TODO: README -->
+          <p>
+            本データは、沖縄県八重山諸島・西表島の北に位置する鳩間島で話される南琉球八重山語鳩間方言の語彙および例文を集成したデータセットを、<ref type="bibliography" target="https://lex-0.org/">TEI Lex-0</ref>形式で表現したものです。
+          </p>
+
+          <p>
+            TEI Lex-0とは、人文テキストデータの標準的な構造化形式である<ref type="bibliography" target="https://tei-c.org/release/doc/tei-p5-doc/ja/html/index.html">TEI P5</ref>を拡張し、辞書などの語彙資源を表現するのに特化したカスタムスキーマです。ただし、現状では音声ファイルへのリンク、およびルビ（ふりがな）の表現に対応していないため、独自の拡張スキーマを定義しています。XMLの検証には同梱の<ref type="bibliography" target="TEILex0-hatoma.rng">TEILex0-hatoma.rng</ref>を使用してください。
+          </p>
+
+          <p>
+            各見出し語（語彙項目）の構造はおおむね以下の通りです。
+          </p>
+          <list type="unordered">
+            <item><term>entry</term>: 各見出し語のエントリ
+              <list type="unordered">
+                <item><term>form</term>
+                  <list type="unordered">
+                    <item><term>orth</term>: カタカナ綴り（辞書形）</item>
+                    <item><term>pron@notation="accent"</term>: 鳩間方言の発音とアクセント</item>
+                    <item><term>pron@notation="IPA"</term>: 発音のIPA表記</item>
+                    <item><term>audio</term>: 音声ファイルへのリンク</item>
+                  </list>
+                </item>
+                <item><term>gramGrp/gram</term>: 品詞名</item>
+                <item><term>sense</term>: 意味項目
+                  <list type="unordered">
+                    <item><term>gramGrp/gram</term>: 意味項目の品詞名</item>
+                    <item><term>usg</term>: 分野・単語分類が記載されている場合があります</item>
+                    <item><term>def</term>: 語釈（共通語）
+                      <list type="unordered">
+                        <item><term>quote@type="song"</term>: 歌が記載されている場合があります</item>
+                      </list>
+                    </item>
+                    <item><term>cit@type="example"</term>: 例文
+                      <list type="unordered">
+                        <item><term>quote</term>: 鳩間方言の例文</item>
+                        <item><term>pron@notation="IPA"</term>: 例文の発音のIPA表記</item>
+                        <item><term>cit@type="translation"</term>: 例文の共通語訳</item>
+                      </list>
+                    </item>
+                  </list>
+                </item>
+                <item><term>note</term>: <term>@xml:id</term>が「EXP」を含むものは、用法説明です。形式は意味項目とほぼ同じです。</item>
+              </list>
+            </item>
+          </list>
+
+          <p>
+            注：
+            <list type="unordered">
+              <item>鳩間方言の内容は<term>@lang="rys-x-hatoma"</term>で、共通語の内容は<term>@lang="ja"</term>で示されています。</item>
+              <item>見出し語の各音声ファイルは<ref type="bibliography" target="">『鳩間方言 音声語彙データベース』</ref>に、例文の各音声ファイルは<ref type="bibliography" target="">『鳩間方言 音声例文データベース』</ref>に収録されているものです。</item>
+            </list>
+          </p>
+
+          <!-- TODO: 使ったら引用してください的なこと -->
+          
+        </note>
+      </notesStmt>
       <sourceDesc>
         <listBibl type="dictionaries">
           <biblStruct>
+            <monogr source="https://doi.org/10.15084/00003209">
+              <title level="m">鳩間方言 音声語彙データベース</title>
+              <author>
+                <persName>
+                  <surname>加治工</surname>
+                  <forename>真市</forename>
+                </persName>
+              </author>
+              <editor>
+                <persName>
+                  <surname>中川</surname>
+                  <forename>奈津子</forename>
+                </persName>
+              </editor>
+              <edition>20210225</edition>
+              <imprint>
+                <date when-iso="2021-03-12">2021-03-12</date>
+                <publisher>国立国語研究所言語変異研究領域</publisher>
+              </imprint>
+            </monogr>
+          </biblStruct>
+          <biblStruct>
+            <monogr source="https://doi.org/10.15084/00003659">
+              <title level="m">鳩間方言 音声例文データベース</title>
+              <author>
+                <persName>
+                  <surname>加治工</surname>
+                  <forename>真市</forename>
+                </persName>
+              </author>
+              <editor>
+                <persName>
+                  <surname>中川</surname>
+                  <forename>奈津子</forename>
+                </persName>
+              </editor>
+              <editor>
+                <persName>
+                  <surname>加藤</surname>
+                  <forename>幹治</forename>
+                </persName>
+              </editor>
+              <edition>20221001</edition>
+              <imprint>
+                <date when-iso="2022-10-01">2022-10-01</date>
+                <publisher>国立国語研究所言語変異研究領域</publisher>
+              </imprint>
+            </monogr>
+          </biblStruct>
+          <biblStruct>
             <monogr>
-              <title level="m" type="main">鳩間方言辞典</title>
+              <title level="m" type="full">鳩間方言辞典</title>
               <author>
                 <persName>
                   <surname>加治工</surname>
@@ -51,10 +193,13 @@
     <profileDesc>
       <langUsage>
         <!-- language[@role] は TEI P5 非互換 -->
-        <language role="sourceLanguage" ident="rys-x-hatoma">鳩間方言</language>
+        <language role="sourceLanguage" ident="rys-x-hatoma">南琉球八重山鳩間方言</language>
         <language role="targetLanguage" ident="ja">日本語</language>
       </langUsage>
     </profileDesc>
+    <revisionDesc status="published">
+      <change when-iso="2026-04-28" status="published">初版発行</change>
+    </revisionDesc>
   </teiHeader>
   <text>
     <body/>
